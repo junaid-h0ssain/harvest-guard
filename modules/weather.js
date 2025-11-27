@@ -1,7 +1,7 @@
 // modules/weather.js
 import { WEATHER_CONFIG } from "../src/config.js";
 
-// Example: static mapping of district -> coordinates
+// Expanded mapping of district/upazila -> coordinates
 const DISTRICT_COORDS = {
     "Dhaka": { lat: 23.8103, lon: 90.4125 },
     "Chattogram": { lat: 22.3569, lon: 91.7832 },
@@ -10,7 +10,14 @@ const DISTRICT_COORDS = {
     "Sylhet": { lat: 24.8949, lon: 91.8687 },
     "Barisal": { lat: 22.7010, lon: 90.3535 },
     "Rangpur": { lat: 25.7439, lon: 89.2752 },
-    "Mymensingh": { lat: 24.7471, lon: 90.4203 }
+    "Mymensingh": { lat: 24.7471, lon: 90.4203 },
+    "Cumilla": { lat: 23.4607, lon: 91.1809 },
+    "Gazipur": { lat: 24.0023, lon: 90.4264 },
+    "Narayanganj": { lat: 23.6238, lon: 90.5000 },
+    "Bogura": { lat: 24.8481, lon: 89.3730 },
+    "Pabna": { lat: 24.0063, lon: 89.2372 },
+    "Jessore": { lat: 23.1634, lon: 89.2182 },
+    "Cox's Bazar": { lat: 21.4272, lon: 92.0058 }
 };
 
 export function initWeather() {
@@ -18,6 +25,23 @@ export function initWeather() {
         fetchAndRenderWeather,
         updateBatchRiskFromWeather
     };
+
+    // Initialize dropdown
+    const select = document.getElementById("weather-location");
+    if (select) {
+        Object.keys(DISTRICT_COORDS).sort().forEach(loc => {
+            const opt = document.createElement("option");
+            opt.value = loc;
+            opt.textContent = loc; // In a real app, we might map this to Bangla names
+            select.appendChild(opt);
+        });
+
+        select.addEventListener("change", (e) => {
+            if (e.target.value) {
+                fetchAndRenderWeather(e.target.value);
+            }
+        });
+    }
 }
 
 async function fetchWeatherForDistrict(district) {
@@ -36,40 +60,66 @@ async function fetchWeatherForDistrict(district) {
     }
 }
 
-async function fetchAndRenderWeather() {
-    const user = window.HG.getCurrentUser();
-    if (!user) return;
-
+async function fetchAndRenderWeather(districtOverride = null) {
     const weatherPanel = document.getElementById("weather-panel");
     if (!weatherPanel) return;
 
-    const userData = await getUserData(user.uid);
-    if (!userData?.district) {
-        weatherPanel.textContent = "জেলা নির্বাচন করুন।";
+    let district = districtOverride;
+
+    // If no override, try to get from user profile
+    if (!district) {
+        const user = window.HG.getCurrentUser();
+        if (user) {
+            const userData = await getUserData(user.uid);
+            if (userData?.district) {
+                district = userData.district;
+                // Update dropdown to match
+                const select = document.getElementById("weather-location");
+                if (select) select.value = district;
+            }
+        }
+    }
+
+    if (!district) {
+        weatherPanel.innerHTML = "<p>দয়া করে একটি এলাকা নির্বাচন করুন। (Please select an area)</p>";
         return;
     }
 
-    const data = await fetchWeatherForDistrict(userData.district);
+    weatherPanel.innerHTML = "<p>লোড হচ্ছে... (Loading...)</p>";
+
+    const data = await fetchWeatherForDistrict(district);
     if (!data || !data.list) {
-        weatherPanel.textContent = "আবহাওয়া তথ্য পাওয়া যায়নি।";
+        weatherPanel.innerHTML = "<p>আবহাওয়া তথ্য পাওয়া যায়নি। (Weather data not found)</p>";
         return;
     }
 
     const daily = aggregateToDaily(data.list);
-    weatherPanel.innerHTML = "";
+    renderWeather(daily, weatherPanel);
+}
 
-    daily.slice(0, 5).forEach(day => {
+function renderWeather(dailyData, container) {
+    container.innerHTML = "";
+
+    dailyData.slice(0, 5).forEach(day => {
         const div = document.createElement("div");
         const advice = makeBanglaAdvice(day);
-        div.className = "weather-day";
+        div.className = "weather-day card"; // Reusing card class for style
+        div.style.marginBottom = "1rem";
+
+        const date = new Date(day.dt * 1000).toLocaleDateString("bn-BD", { weekday: 'long', day: 'numeric', month: 'long' });
+
         div.innerHTML = `
-      <p>${new Date(day.dt * 1000).toLocaleDateString("bn-BD")}</p>
-      <p>তাপমাত্রা: ${Math.round(day.temp)}°C</p>
-      <p>আর্দ্রতা: ${Math.round(day.humidity)}%</p>
-      <p>বৃষ্টি সম্ভাবনা: ${Math.round(day.rainProb)}%</p>
-      <p class="weather-advice">${advice}</p>
-    `;
-        weatherPanel.appendChild(div);
+            <h3>${date}</h3>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span>তাপমাত্রা: <strong>${Math.round(day.temp)}°C</strong></span>
+                <span>আর্দ্রতা: <strong>${Math.round(day.humidity)}%</strong></span>
+                <span>বৃষ্টি: <strong>${Math.round(day.rainProb)}%</strong></span>
+            </div>
+            <div class="weather-advice" style="background: #f0fdf4; padding: 10px; border-radius: 5px; border-left: 4px solid #16a34a;">
+                <strong>পরামর্শ:</strong> ${advice}
+            </div>
+        `;
+        container.appendChild(div);
     });
 }
 
@@ -97,16 +147,26 @@ function aggregateToDaily(list) {
 }
 
 function makeBanglaAdvice(day) {
-    if (day.humidity > 85 && day.rainProb > 60) {
-        return "আর্দ্রতা ও বৃষ্টির সম্ভাবনা বেশি; শস্য ঘরের ভিতরে শুকান ও বাতাস চলাচল নিশ্চিত করুন।";
+    // “আগামী ৩ দিন বৃষ্টি ৮৫% → আজই ধান কাটুন অথবা ঢেকক রাখুন”
+    // “তাপমাত্রা ৩৬°C উঠকব → দবকককের দিকক ঢেচ দিন”
+
+    if (day.rainProb > 80) {
+        return "বৃষ্টির সম্ভাবনা খুব বেশি (৮০%+)। আজই ধান কাটুন অথবা ঢেকে রাখুন।";
     }
-    if (day.temp > 32 && day.humidity < 60) {
-        return "তাপমাত্রা বেশি; দ্রুত শুকানোর ব্যবস্থা করুন এবং আর্দ্রতা পরীক্ষা করুন।";
+    if (day.rainProb > 50) {
+        return "বৃষ্টির সম্ভাবনা আছে। শস্য বাইরে রাখবেন না।";
     }
-    if (day.humidity > 75) {
-        return "আর্দ্রতা বেশি; ফসল নিয়মিত পরীক্ষা করুন।";
+    if (day.temp > 35) {
+        return "তাপমাত্রা অনেক বেশি (৩৫°C+)। নিয়মিত সেচ দিন।";
     }
-    return "পরিস্থিতি মাঝারি; নিয়মিত শস্য পরীক্ষা করুন।";
+    if (day.humidity > 85) {
+        return "বাতাসে আর্দ্রতা বেশি। শস্যে পোকা বা ছত্রাক হতে পারে, সতর্ক থাকুন।";
+    }
+    if (day.temp < 15) {
+        return "শীতল আবহাওয়া। চারা ঢেকে রাখার ব্যবস্থা করতে পারেন।";
+    }
+
+    return "আবহাওয়া স্বাভাবিক আছে। নিয়মিত পরিচর্যা করুন।";
 }
 
 // Risk update for batches using weather data
@@ -147,7 +207,12 @@ function makeRiskSummaryBn(batch, etcl, level) {
     return `কম ঝুঁকি, ETCL ${etcl} ঘন্টা; বর্তমান সংরক্ষণ ভালো।`;
 }
 
-// ETCL calculation logic
+// ETCL calculation logic (duplicated for now, or import if module structure allows)
+// Ideally this should be imported from weatherRiskLogic.js but for simplicity keeping it here if imports are tricky
+// But since we have modules/weatherRiskLogic.js, let's try to use it if possible. 
+// However, the original file had it inline or similar. 
+// Let's re-implement simple version here to avoid import issues if not set up, 
+// OR better, let's just keep the logic consistent.
 function calculateETCL(batch, forecastList) {
     let etcl = 120; // base hours
 

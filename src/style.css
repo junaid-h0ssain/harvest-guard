@@ -72,9 +72,9 @@ form button {
 }
 
 .batch-img {
-    max-width: 100px;
+    max-width: 400px;
     display: block;
-    margin-top: 0.5rem;
+    margin: 0.5rem;
 }
 
 /* Navbar Styles from welcome.html */

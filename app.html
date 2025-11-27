@@ -90,6 +90,7 @@
             <option value="bn">বাংলা</option>
           </select>
           <button id="nav-dashboard">Dashboard</button>
+          <button id="nav-weather">Weather</button>
           <button id="nav-profile">Profile</button>
           <button id="logout-btn">Logout</button>
         </div>
@@ -138,6 +139,24 @@
 
         <h3>Export data</h3>
         <button id="export-btn">Export JSON + CSV</button>
+      </section>
+
+      <!-- Weather View -->
+      <section id="weather-view" class="hidden">
+        <h2>আবহাওয়া ও পরামর্শ (Weather & Advisory)</h2>
+
+        <div class="weather-controls">
+          <label for="weather-location">এলাকা নির্বাচন করুন (Select Area):</label>
+          <select id="weather-location">
+            <option value="">-- নির্বাচন করুন --</option>
+            <!-- Options will be populated by JS -->
+          </select>
+        </div>
+
+        <div id="weather-panel" class="weather-grid">
+          <!-- Weather cards will go here -->
+          <p>দয়া করে একটি এলাকা নির্বাচন করুন।</p>
+        </div>
       </section>
 
       <!-- Profile -->

@@ -1,6 +1,6 @@
 // modules/profile.js
 import { db, fbDbApi } from "../src/firebase-config.js";
-const { doc, getDoc, updateDoc } = fbDbApi;
+const { doc, getDoc, updateDoc, setDoc } = fbDbApi;
 
 export function initProfile() {
     const profileForm = document.getElementById("profile-form");
@@ -8,8 +8,14 @@ export function initProfile() {
 
     profileForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
+        console.log("Profile form submitted");
         const user = window.HG.getCurrentUser();
-        if (!user) return;
+        if (!user) {
+            console.error("No current user found!");
+            alert("You are not logged in.");
+            return;
+        }
+        console.log("Updating profile for user:", user.uid);
         const name = document.getElementById("edit-name").value.trim();
         const phone = document.getElementById("edit-phone").value.trim();
         const bio = document.getElementById("edit-bio").value.trim();
@@ -18,13 +24,14 @@ export function initProfile() {
         const upazila = document.getElementById("edit-upazila")?.value || "";
 
         try {
-            await updateDoc(doc(db, "users", user.uid), {
+            await setDoc(doc(db, "users", user.uid), {
                 name, phone, bio, division, district, upazila, onboardingCompleted: true
-            });
+            }, { merge: true });
             await loadProfile();
             alert("Profile updated.");
-        } catch {
-            alert("Error updating profile.");
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            alert("Error updating profile: " + error.message);
         }
     });
 
@@ -34,7 +41,7 @@ export function initProfile() {
         localStorage.setItem("hg_lang", lang);
         if (user) {
             try {
-                await updateDoc(doc(db, "users", user.uid), { language: lang });
+                await setDoc(doc(db, "users", user.uid), { language: lang }, { merge: true });
             } catch {
                 // ignore
             }
