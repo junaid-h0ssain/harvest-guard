@@ -65,6 +65,10 @@ export function initQuickRegister() {
     // Google Login
     googleBtn?.addEventListener("click", async () => {
         try {
+            // Clear any batches from previous user session BEFORE Google login
+            localStorage.removeItem("hg_sync_queue");
+            localStorage.removeItem("hg_local_batches");
+
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
@@ -117,6 +121,10 @@ export function initQuickRegister() {
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Sending...";
 
+                // Clear any batches from previous user session BEFORE phone auth
+                localStorage.removeItem("hg_sync_queue");
+                localStorage.removeItem("hg_local_batches");
+
                 const appVerifier = window.recaptchaVerifier;
                 confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
 
@@ -149,6 +157,10 @@ export function initQuickRegister() {
                 const result = await confirmationResult.confirm(code);
                 const user = result.user;
                 console.log("Phone login success:", user.uid);
+
+                // Clear any batches from previous user session
+                localStorage.removeItem("hg_sync_queue");
+                localStorage.removeItem("hg_local_batches");
 
                 await checkAndCreateUserDoc(user, {
                     phone: user.phoneNumber
@@ -190,6 +202,10 @@ export function initQuickRegister() {
         try {
             submitBtn.disabled = true;
             submitBtn.textContent = "Registering...";
+
+            // Clear any batches from previous user session BEFORE creating account
+            localStorage.removeItem("hg_sync_queue");
+            localStorage.removeItem("hg_local_batches");
 
             const cred = await createUserWithEmailAndPassword(auth, email, password);
             const user = cred.user;

@@ -35,6 +35,10 @@ export function initAuth(setCurrentUser) {
         const language = document.getElementById("reg-language").value || "en";
 
         try {
+            // Clear any batches from previous user session BEFORE creating account
+            localStorage.removeItem("hg_sync_queue");
+            localStorage.removeItem("hg_local_batches");
+
             const cred = await createUserWithEmailAndPassword(auth, email, password);
             const user = cred.user;
             const createdAt = new Date().toISOString();
