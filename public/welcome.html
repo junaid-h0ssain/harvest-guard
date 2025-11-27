@@ -286,6 +286,103 @@
             background: rgba(255, 255, 255, 0.03);
             font-weight: 700;
         }
+
+        /* Quick Register Form Styles */
+        #registerForm {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #registerForm label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        #registerForm input,
+        #registerForm select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        #registerForm input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #registerForm input:focus,
+        #registerForm select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 12px rgba(245, 179, 92, 0.15);
+        }
+
+        #registerForm .btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        #registerForm .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 179, 92, 0.3);
+        }
+
+        #registerForm .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .form-row > * {
+            flex: 1;
+        }
+
+        #quickRegisterError,
+        #quickRegisterSuccess {
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        #quickRegisterError {
+            background: rgba(255, 99, 99, 0.1);
+            color: #ff6363;
+            border: 1px solid rgba(255, 99, 99, 0.3);
+        }
+
+        #quickRegisterSuccess {
+            background: rgba(76, 200, 150, 0.1);
+            color: #4cc896;
+            border: 1px solid rgba(76, 200, 150, 0.3);
+        }
     </style>
 </head>
 
@@ -346,25 +443,32 @@
                         </div>
 
                         <form id="registerForm" style="margin-top: 12px;">
-                            <label for="rname" id="labelName">Name</label>
-                            <input id="rname" placeholder="Farmer Name" required />
+                            <div>
+                                <label for="rname" id="labelName">Name</label>
+                                <input id="rname" placeholder="Farmer Name" required />
+                            </div>
 
-                            <label for="rphone" id="labelPhone">Phone</label>
-                            <input id="rphone" placeholder="+8801XXXXXXXXX" required />
+                            <div>
+                                <label for="rphone" id="labelPhone">Phone</label>
+                                <input id="rphone" placeholder="+8801XXXXXXXXX" required />
+                            </div>
 
-                            <label for="remail" id="labelEmail">Email</label>
-                            <input id="remail" placeholder="you@farm.com" />
+                            <div>
+                                <label for="remail" id="labelEmail">Email</label>
+                                <input id="remail" placeholder="you@farm.com" />
+                            </div>
 
-                            <label for="rpass" id="labelPass">Password</label>
-                            <input id="rpass" placeholder="Choose a secure password" type="password" required />
+                            <div>
+                                <label for="rpass" id="labelPass">Password</label>
+                                <input id="rpass" placeholder="Choose a secure password" type="password" required />
+                            </div>
 
-                            <div style="display: flex; gap: 8px; margin-top: 10px;">
+                            <div class="form-row">
                                 <select id="prefLang" aria-label="Preferred language">
                                     <option value="en">English</option>
                                     <option value="bn">বাংলা</option>
                                 </select>
-
-                                <button class="btn" type="submit" style="flex: 1;">Register</button>
+                                <button class="btn" type="submit">Register</button>
                             </div>
                         </form>
                 </div>
@@ -445,7 +549,7 @@
         </footer>
     </div>
 
-    <script type="module" src="./welcome.js"></script>
+    <script type="module" src="../src/welcome.js"></script>
 </body>
 
 </html>

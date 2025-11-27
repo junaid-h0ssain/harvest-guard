@@ -1,3 +1,6 @@
+// Import modules
+import { initQuickRegister } from "../modules/quickRegister.js";
+
 // Translation data
 const translations = {
     en: {
@@ -97,7 +100,7 @@ function setLanguage(lang) {
     console.log(`Language switched to: ${lang}`);
 }
 
-function init() {
+function initWeather() {
     try {
         const langToggle = document.getElementById('lang-toggle');
         const enterAppBtn = document.getElementById('enter-app-btn');
@@ -121,6 +124,9 @@ function init() {
             console.log('✓ Enter app button initialized');
         }
 
+        // Initialize quick register module
+        initQuickRegister();
+
         console.log('✓ Page initialization complete');
     } catch (error) {
         console.error('✗ Error initializing page:', error);
@@ -128,4 +134,4 @@ function init() {
 }
 
 // For module scripts, DOM is parsed before execution, so this is safe:
-init();
+initWeather();
