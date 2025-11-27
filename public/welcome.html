@@ -267,6 +267,25 @@
                 left: 0;
             }
         }
+
+
+        .small {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .card {
+            background: var(--card);
+            padding: 14px;
+            border-radius: 12px;
+        }
+
+        .badge {
+            padding: 6px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.03);
+            font-weight: 700;
+        }
     </style>
 </head>
 
@@ -300,7 +319,7 @@
                 </a>
             </div>
             <aside class="hero-meta">
-                <div class="hero-meta-item">
+                <!-- <div class="hero-meta-item">
                     <span data-i18n="meta-problem-title">The Problem</span>
                     <p data-i18n="meta-problem-text">12–32% of staple foods including rice, pulses, vegetables, meat,
                         and dairy are lost annually during production and distribution.</p>
@@ -314,6 +333,40 @@
                     <span data-i18n="meta-solution-title">Our Solution</span>
                     <p data-i18n="meta-solution-text">Real-time monitoring, AI-powered risk detection, and hyper-local
                         weather advisories in Bangla.</p>
+                </div> -->
+                <!-- Quick Register -->
+                <div>
+                    <aside class="card" aria-label="Quick Onboarding">
+                        <div style="display: flex; gap: 10px; align-items: center; justify-content: space-between;">
+                            <div>
+                                <strong id="quickTitle">Quick Register</strong>
+                                <div class="small" id="quickSub">You can register fast.</div>
+                            </div>
+                            <div class="badge" id="langBadge">EN</div>
+                        </div>
+
+                        <form id="registerForm" style="margin-top: 12px;">
+                            <label for="rname" id="labelName">Name</label>
+                            <input id="rname" placeholder="Farmer Name" required />
+
+                            <label for="rphone" id="labelPhone">Phone</label>
+                            <input id="rphone" placeholder="+8801XXXXXXXXX" required />
+
+                            <label for="remail" id="labelEmail">Email</label>
+                            <input id="remail" placeholder="you@farm.com" />
+
+                            <label for="rpass" id="labelPass">Password</label>
+                            <input id="rpass" placeholder="Choose a secure password" type="password" required />
+
+                            <div style="display: flex; gap: 8px; margin-top: 10px;">
+                                <select id="prefLang" aria-label="Preferred language">
+                                    <option value="en">English</option>
+                                    <option value="bn">বাংলা</option>
+                                </select>
+
+                                <button class="btn" type="submit" style="flex: 1;">Register</button>
+                            </div>
+                        </form>
                 </div>
             </aside>
         </section>
@@ -328,7 +381,8 @@
                         and inefficient transportation result in massive economic and environmental costs. These losses
                         particularly affect vulnerable communities and hinder progress toward SDG 12: Responsible
                         Consumption and Production.</p>
-                    <a href="https://bangladesh.un.org/en/sdgs/12" class="section-link" data-i18n="s1-link">Read the full report</a>
+                    <a href="https://bangladesh.un.org/en/sdgs/12" class="section-link" data-i18n="s1-link">Read the
+                        full report</a>
                 </div>
                 <div class="image-placeholder"><img src="/section1.jpg" alt="Farmer inspecting grain storage" /></div>
             </div>
