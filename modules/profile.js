@@ -2,7 +2,10 @@
 import { db, fbDbApi, auth, fbAuthApi } from "../src/firebase-config.js";
 import { CLOUDINARY_CONFIG } from "../src/config.js";
 const { doc, getDoc, updateDoc, setDoc } = fbDbApi;
-const { updatePassword, reauthenticateWithCredential, EmailAuthProvider } = fbAuthApi;
+const { updatePassword, reauthenticateWithCredential, EmailAuthProvider, RecaptchaVerifier, PhoneAuthProvider, updatePhoneNumber, signInWithPhoneNumber } = fbAuthApi;
+
+// Turn off phone auth app verification.
+auth.settings.appVerificationDisabledForTesting = true;
 
 export function initProfile() {
     const profileForm = document.getElementById("profile-form");
@@ -162,7 +165,7 @@ export function initProfile() {
         }
         console.log("Updating profile for user:", user.uid);
         const name = document.getElementById("edit-name").value.trim();
-        const phone = document.getElementById("edit-phone").value.trim();
+        // Phone update is handled separately via OTP
         const bio = document.getElementById("edit-bio").value.trim();
         const division = document.getElementById("edit-division")?.value || "";
         const district = document.getElementById("edit-district")?.value || "";
@@ -170,13 +173,110 @@ export function initProfile() {
 
         try {
             await setDoc(doc(db, "users", user.uid), {
-                name, phone, bio, division, district, upazila, onboardingCompleted: true
+                name, bio, division, district, upazila, onboardingCompleted: true
             }, { merge: true });
             await loadProfile();
             alert("Profile updated.");
         } catch (error) {
             console.error("Error updating profile:", error);
             alert("Error updating profile: " + error.message);
+        }
+    });
+
+    // Phone Number Update with OTP
+    const sendOtpBtn = document.getElementById("send-phone-otp-btn");
+    const verifyOtpBtn = document.getElementById("verify-phone-otp-btn");
+    const newPhoneInput = document.getElementById("new-phone-number");
+    const otpInput = document.getElementById("phone-otp-code");
+    const otpSection = document.getElementById("otp-verification-section");
+    const statusMsg = document.getElementById("phone-update-status");
+
+    let confirmationResult = null;
+    let recaptchaVerifier = null;
+
+    sendOtpBtn?.addEventListener("click", async () => {
+        const phoneNumber = newPhoneInput.value.trim();
+        if (!phoneNumber) {
+            alert("Please enter a phone number");
+            return;
+        }
+
+        // Basic validation for BD phone number (optional but good)
+        // Assuming +880... format or 01...
+        // For firebase, it needs E.164 format (e.g. +88017...)
+
+        statusMsg.textContent = "Sending OTP...";
+        statusMsg.style.color = "#666";
+
+        try {
+            if (!recaptchaVerifier) {
+                recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                    'size': 'invisible',
+                    'callback': (response) => {
+                        // reCAPTCHA solved
+                    }
+                });
+            }
+
+            confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+
+            statusMsg.textContent = "OTP sent! Please check your phone.";
+            statusMsg.style.color = "green";
+            otpSection.classList.remove("hidden");
+            sendOtpBtn.disabled = true;
+            newPhoneInput.disabled = true;
+
+        } catch (error) {
+            console.error("Error sending OTP:", error);
+            statusMsg.textContent = "Error: " + error.message;
+            statusMsg.style.color = "red";
+            if (recaptchaVerifier) {
+                recaptchaVerifier.clear();
+                recaptchaVerifier = null;
+            }
+        }
+    });
+
+    verifyOtpBtn?.addEventListener("click", async () => {
+        const code = otpInput.value.trim();
+        if (!code) {
+            alert("Please enter the OTP code");
+            return;
+        }
+
+        statusMsg.textContent = "Verifying...";
+        statusMsg.style.color = "#666";
+
+        try {
+            // Create credential from verification ID and code
+            const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, code);
+            const user = window.HG.getCurrentUser();
+
+            if (!user) throw new Error("User not logged in");
+
+            // Update phone number in Firebase Auth
+            await updatePhoneNumber(user, credential);
+
+            // Also update in Firestore
+            await setDoc(doc(db, "users", user.uid), { phone: newPhoneInput.value.trim() }, { merge: true });
+
+            statusMsg.textContent = "Phone number updated successfully!";
+            statusMsg.style.color = "green";
+            alert("Phone number updated successfully!");
+
+            // Reset UI
+            otpSection.classList.add("hidden");
+            sendOtpBtn.disabled = false;
+            newPhoneInput.disabled = false;
+            newPhoneInput.value = "";
+            otpInput.value = "";
+
+            await loadProfile();
+
+        } catch (error) {
+            console.error("Error verifying OTP:", error);
+            statusMsg.textContent = "Error: " + error.message;
+            statusMsg.style.color = "red";
         }
     });
 

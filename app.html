@@ -225,10 +225,32 @@
         <h3>Edit profile</h3>
         <form id="profile-form">
           <input id="edit-name" placeholder="Name" />
-          <input id="edit-phone" placeholder="Phone" />
           <textarea id="edit-bio" placeholder="Short bio"></textarea>
           <button type="submit">Save profile</button>
         </form>
+
+        <h3>Update phone number</h3>
+        <div id="phone-update-section" style="margin-bottom: 24px; padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <p style="font-size: 14px; color: #666; margin-bottom: 12px;">
+            For security, we'll send an OTP to verify your new phone number.
+          </p>
+          <div id="phone-update-form">
+            <input id="new-phone-number" type="tel" placeholder="+8801XXXXXXXXX" style="margin-bottom: 8px; width: 100%;" />
+            <button id="send-phone-otp-btn" type="button" class="btn btn-primary" style="margin-bottom: 8px;">
+              Send OTP
+            </button>
+            
+            <div id="otp-verification-section" class="hidden" style="margin-top: 12px;">
+              <input id="phone-otp-code" type="text" placeholder="Enter 6-digit OTP" maxlength="6" style="margin-bottom: 8px; width: 100%;" />
+              <button id="verify-phone-otp-btn" type="button" class="btn btn-primary">
+                Verify OTP & Update Phone
+              </button>
+            </div>
+            
+            <p id="phone-update-status" style="font-size: 12px; margin-top: 8px; color: #666;"></p>
+            <div id="recaptcha-container"></div>
+          </div>
+        </div>
 
         <h3>Change password</h3>
         <form id="password-form">

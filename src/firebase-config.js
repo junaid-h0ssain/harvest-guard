@@ -9,7 +9,12 @@ import {
     signOut,
     updatePassword,
     reauthenticateWithCredential,
-    EmailAuthProvider
+    EmailAuthProvider,
+    RecaptchaVerifier,
+    PhoneAuthProvider,
+    linkWithCredential,
+    updatePhoneNumber,
+    signInWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import {
     getFirestore,
@@ -47,7 +52,12 @@ export const fbAuthApi = {
     signOut,
     updatePassword,
     reauthenticateWithCredential,
-    EmailAuthProvider
+    EmailAuthProvider,
+    RecaptchaVerifier,
+    PhoneAuthProvider,
+    linkWithCredential,
+    updatePhoneNumber,
+    signInWithPhoneNumber
 };
 
 export const fbDbApi = {
