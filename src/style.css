@@ -76,3 +76,55 @@ form button {
     display: block;
     margin-top: 0.5rem;
 }
+
+/* Navbar Styles from welcome.html */
+:root {
+    --bg: #020510;
+    --bg-alt: #050814;
+    --accent: #f5b35c;
+    --muted: #7c8598;
+    --text: #f5f7ff;
+    --card-radius: 18px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: var(--bg);
+    /* Added background for visibility on other pages */
+    color: var(--text);
+}
+
+.nav-logo {
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.nav-cta {
+    font-size: 14px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(245, 243, 255, 0.24);
+    background: var(--accent);
+    color: var(--bg);
+    cursor: pointer;
+    text-decoration: none;
+}
