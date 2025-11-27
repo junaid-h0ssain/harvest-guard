@@ -82,6 +82,38 @@ const translations = {
 // Current language state
 let currentLang = 'en';
 
+// Fetch and inject welcome.html content
+async function loadWelcomePage() {
+    try {
+        const response = await fetch('/welcome.html');
+        const html = await response.text();
+        
+        // Parse HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Extract styles and insert into document head
+        const styles = doc.querySelectorAll('style');
+        styles.forEach(style => document.head.appendChild(style.cloneNode(true)));
+        
+        // Insert body content
+        document.body.innerHTML = doc.body.innerHTML;
+        
+        // Check for login and redirect
+        const isLoggedIn = localStorage.getItem('harvestguard_user');
+        if (isLoggedIn) {
+            window.location.href = './app.html';
+            return;
+        }
+        
+        // Initialize event listeners after DOM is loaded
+        initializeEventListeners();
+        
+    } catch (error) {
+        console.error('Failed to load welcome page:', error);
+    }
+}
+
 function setLanguage(lang) {
     currentLang = lang;
 
@@ -100,7 +132,7 @@ function setLanguage(lang) {
     console.log(`Language switched to: ${lang}`);
 }
 
-function initWeather() {
+function initializeEventListeners() {
     try {
         const langToggle = document.getElementById('lang-toggle');
         const enterAppBtn = document.getElementById('enter-app-btn');
@@ -119,7 +151,7 @@ function initWeather() {
         if (enterAppBtn) {
             enterAppBtn.addEventListener('click', () => {
                 console.log('Enter app button clicked');
-                window.location.href = '../app.html';
+                window.location.href = './app.html';
             });
             console.log('✓ Enter app button initialized');
         }
@@ -133,5 +165,9 @@ function initWeather() {
     }
 }
 
-// For module scripts, DOM is parsed before execution, so this is safe:
-initWeather();
+// Load welcome page when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadWelcomePage);
+} else {
+    loadWelcomePage();
+}

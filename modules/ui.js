@@ -2,29 +2,40 @@
 export function initUI() {
     const navDashboard = document.getElementById("nav-dashboard");
     const navProfile = document.getElementById("nav-profile");
+    const navWeather = document.getElementById("nav-weather");
+    const navAiScanner = document.getElementById("nav-ai-scanner");
     const dashboardView = document.getElementById("dashboard-view");
     const profileView = document.getElementById("profile-view");
     const weatherView = document.getElementById("weather-view");
-    const navWeather = document.getElementById("nav-weather");
+    const aiScannerView = document.getElementById("ai-scanner-view");
     const authSection = document.getElementById("auth-section");
     const mainSection = document.getElementById("main-section");
 
-    navDashboard?.addEventListener("click", () => {
-        dashboardView.classList.remove("hidden");
+    function hideAllViews() {
+        dashboardView.classList.add("hidden");
         profileView.classList.add("hidden");
         weatherView.classList.add("hidden");
+        aiScannerView.classList.add("hidden");
+    }
+
+    navDashboard?.addEventListener("click", () => {
+        hideAllViews();
+        dashboardView.classList.remove("hidden");
     });
 
     navProfile?.addEventListener("click", () => {
-        dashboardView.classList.add("hidden");
+        hideAllViews();
         profileView.classList.remove("hidden");
-        weatherView.classList.add("hidden");
     });
 
     navWeather?.addEventListener("click", () => {
-        dashboardView.classList.add("hidden");
-        profileView.classList.add("hidden");
+        hideAllViews();
         weatherView.classList.remove("hidden");
+    });
+
+    navAiScanner?.addEventListener("click", () => {
+        hideAllViews();
+        aiScannerView.classList.remove("hidden");
     });
 
     const globalNav = document.querySelector(".nav");

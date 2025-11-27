@@ -81,6 +81,7 @@
           </select>
           <button id="nav-dashboard">Dashboard</button>
           <button id="nav-weather">Weather</button>
+          <button id="nav-ai-scanner">AI Scanner</button>
           <button id="nav-profile">Profile</button>
           <button id="logout-btn">Logout</button>
         </div>
@@ -149,6 +150,34 @@
         </div>
       </section>
 
+      <!-- AI Scanner -->
+      <section id="ai-scanner-view" class="hidden">
+        <h2 id="scanner-title">Crop Health Scanner (AI)</h2>
+        <p id="scanner-subtitle" class="text-sm text-gray-600 mb-4">
+          ফসলের ছবি তুলুন বা আপলোড করুন, সিস্টেম বলবে ফসলটি Fresh নাকি Rotten।
+        </p>
+
+        <div class="space-y-3">
+          <input id="ai-scan-input" type="file" accept="image/*" capture="environment"
+            class="w-full border rounded px-3 py-2 text-sm" />
+
+          <button id="ai-scan-button" class="btn btn-primary w-full text-sm" type="button">
+            Scan crop health
+          </button>
+
+          <p id="ai-scan-status" class="text-xs text-gray-600"></p>
+
+          <div class="flex items-start gap-3 mt-2">
+            <img id="ai-scan-preview" class="w-24 h-24 object-cover rounded border hidden"
+              alt="Selected crop photo preview" />
+            <div class="flex-1">
+              <p class="text-sm font-medium">Result</p>
+              <p id="ai-scan-result" class="text-sm"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Profile -->
       <section id="profile-view" class="hidden">
         <h2>Profile</h2>
@@ -175,36 +204,6 @@
           <button type="submit">Update password</button>
         </form>
       </section>
-    </section>
-
-    <!-- AI Crop Health Scanner -->
-    <section id="ai-scanner" class="card mt-4">
-      <h2 class="card-title text-lg font-semibold">
-        Crop Health Scanner (AI)
-      </h2>
-      <p class="text-sm text-gray-600 mb-2">
-        ফসলের ছবি তুলুন বা আপলোড করুন, সিস্টেম বলবে ফসলটি Fresh নাকি Rotten।
-      </p>
-
-      <div class="space-y-3">
-        <input id="ai-scan-input" type="file" accept="image/*" capture="environment"
-          class="w-full border rounded px-3 py-2 text-sm" />
-
-        <button id="ai-scan-button" class="btn btn-primary w-full text-sm" type="button">
-          Scan crop health
-        </button>
-
-        <p id="ai-scan-status" class="text-xs text-gray-600"></p>
-
-        <div class="flex items-start gap-3 mt-2">
-          <img id="ai-scan-preview" class="w-24 h-24 object-cover rounded border hidden"
-            alt="Selected crop photo preview" />
-          <div class="flex-1">
-            <p class="text-sm font-medium">Result</p>
-            <p id="ai-scan-result" class="text-sm"></p>
-          </div>
-        </div>
-      </div>
     </section>
 
   </div>
