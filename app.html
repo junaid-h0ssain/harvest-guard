@@ -17,21 +17,23 @@
     <section id="auth-section">
       <!-- LOGIN CARD (default visible) -->
       <div id="login-card" class="card">
-        <h2>Login</h2>
-        <h4><a href="/">Back to home page</a></h4>
+        <div class="card-header">
+          <h2>Login</h2>
+          <h4><a href="/">Back to home page</a></h4>
+        </div>
         <form id="login-form">
           <input type="email" id="login-email" placeholder="Email" required />
           <input type="password" id="login-password" placeholder="Password" required />
           <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
-        <p class="divider">Or</p>
+        <!-- <p class="divider">Or</p> -->
 
-        <!-- phone + OTP (UI only for now) -->
+        <!-- phone + OTP (UI only for now)
         <form id="phone-login-form">
           <input type="tel" id="login-phone" placeholder="+880123456789" />
           <button type="button" id="send-otp-btn" class="btn btn-dark">Send OTP</button>
-        </form>
+        </form> -->
 
         <p class="divider">Or Google Login</p>
         <button type="button" id="google-login-btn" class="btn btn-google">
@@ -63,7 +65,7 @@
           <button type="submit" class="btn btn-primary">Sign up</button>
         </form>
 
-        <button id="show-login" class="link-btn">
+        <button id="show-login" class="btn btn-primary">
           Back to login
         </button>
       </div>

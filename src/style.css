@@ -155,3 +155,74 @@ form button {
     cursor: pointer;
     text-decoration: none;
 }
+
+.link-btn{
+    width: auto;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #2f855a;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #22543d;
+}
+
+.btn-dark {
+    background: #4a5568;
+    color: white;
+}
+
+.btn-dark:hover {
+    background: #2d3748;
+}
+
+.btn-google {
+    background: white;
+    color: #2d3748;
+    border: 1px solid #cbd5e0;
+}
+
+.btn-google:hover {
+    background: #f7fafc;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-header h2 {
+    margin: 0;
+}
+
+.card-header h4 {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.card-header a {
+    color: #2f855a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.card-header a:hover {
+    text-decoration: underline;
+}
