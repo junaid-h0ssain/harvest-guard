@@ -14,7 +14,9 @@ import {
     PhoneAuthProvider,
     linkWithCredential,
     updatePhoneNumber,
-    signInWithPhoneNumber
+    signInWithPhoneNumber,
+    GoogleAuthProvider,
+    signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import {
     getFirestore,
@@ -57,7 +59,9 @@ export const fbAuthApi = {
     PhoneAuthProvider,
     linkWithCredential,
     updatePhoneNumber,
-    signInWithPhoneNumber
+    signInWithPhoneNumber,
+    GoogleAuthProvider,
+    signInWithPopup
 };
 
 export const fbDbApi = {

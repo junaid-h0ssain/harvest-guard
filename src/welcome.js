@@ -4,9 +4,9 @@ import { initQuickRegister } from "../modules/quickRegister.js";
 // Translation data
 const translations = {
     en: {
-        "nav-features": "Features",
-        "nav-impact": "Impact",
-        "nav-about": "About",
+        "nav-features": "About Us",
+        "nav-impact": "Testimonies",
+        "nav-about": "Reasearch",
         "nav-enter": "Enter App",
         "hero-tagline": "Reducing Food Loss in Bangladesh",
         "hero-title": "Protecting Every Grain, Securing Every Future.",

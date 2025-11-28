@@ -89,7 +89,11 @@ export function initQuickRegister() {
 
         } catch (error) {
             console.error("Google login error:", error);
-            showQuickRegisterError(error.message);
+            if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+                showQuickRegisterError("Sign-in cancelled.");
+            } else {
+                showQuickRegisterError(error.message);
+            }
         }
     });
 

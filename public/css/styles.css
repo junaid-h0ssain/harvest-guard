@@ -17,7 +17,8 @@ body {
 /* Masonry Grid / Uniform Grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* responsive */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* responsive */
   gap: 25px;
   margin-top: 30px;
 }
@@ -40,7 +41,7 @@ body {
 /* --- CARD STYLE --- */
 .card {
   width: 100%;
-  height: 250px; 
+  height: 250px;
   padding: 18px;
   border-radius: 16px;
 
@@ -120,7 +121,8 @@ header {
 
 /* Footer */
 footer {
-  background: #0b1220; /* dark card-style background */
+  background: #0b1220;
+  /* dark card-style background */
   color: #ffffff;
   padding: 40px 20px 20px 20px;
   font-size: 14px;
@@ -128,13 +130,15 @@ footer {
 }
 
 footer a {
-  color: #2c7a7b; /* HarvestGuard green accent */
+  color: #2c7a7b;
+  /* HarvestGuard green accent */
   text-decoration: none;
   margin-right: 10px;
 }
 
 footer a:hover {
-  color: #f6ad55; /* accent hover color */
+  color: #f6ad55;
+  /* accent hover color */
 }
 
 .footer-container {
@@ -149,7 +153,8 @@ footer a:hover {
 .footer-section h3 {
   margin-bottom: 12px;
   font-size: 16px;
-  color: #f6ad55; /* accent */
+  color: #f6ad55;
+  /* accent */
 }
 
 .social-links a {
@@ -168,144 +173,155 @@ footer a:hover {
 
 /* Team Grid */
 .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
 }
 
 /* Team Card */
 .team-card {
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 18px;
-    border-radius: 16px;
-    background: linear-gradient(145deg, rgba(44,122,123,0.25), rgba(246,173,85,0.15));
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 6px 22px rgba(0,0,0,0.55);
-    text-align: center;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(44, 122, 123, 0.25), rgba(246, 173, 85, 0.15));
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
+  text-align: center;
 }
 
 .team-card img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 12px;
-    margin-top: 43px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  margin-top: 43px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .team-card h3 {
-    margin: 8px 0 4px 0;
-    font-size: 16px;
-    color: #fff;
+  margin: 8px 0 4px 0;
+  font-size: 16px;
+  color: #fff;
 }
 
 .team-card p {
-    font-size: 14px;
-    color: #d4e7e7;
+  font-size: 14px;
+  color: #d4e7e7;
 }
 
 /* Section Titles */
 h2 {
-    font-size: 24px;
-    margin-bottom: 12px;
+  font-size: 24px;
+  margin-bottom: 12px;
 }
 
 /* Paragraphs */
 p {
-    font-size: 16px;
-    margin-bottom: 16px;
-    line-height: 1.5;
+  font-size: 16px;
+  margin-bottom: 16px;
+  line-height: 1.5;
 }
 
 /* Research page stacked cards */
 .research-grid {
-    display: flex;
-    flex-direction: column;  /* stack vertically */
-    gap: 10px;               /* spacing between cards */
-    margin-top: 10px;
-    align-items: center;     /* center the cards horizontally */
+  display: flex;
+  flex-direction: column;
+  /* stack vertically */
+  gap: 10px;
+  /* spacing between cards */
+  margin-top: 10px;
+  align-items: center;
+  /* center the cards horizontally */
 }
 
 /* Research cards - dynamic height */
 .research-grid .card {
-    width: 80%;             /* 80% of container width */
-    max-width: 900px;       /* optional max-width */
-    padding: 16px;          /* padding inside card */
-    border-radius: 14px;
-    background: linear-gradient(145deg, rgba(44,122,123,0.25), rgba(246,173,85,0.15));
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.55);
+  width: 80%;
+  /* 80% of container width */
+  max-width: 900px;
+  /* optional max-width */
+  padding: 16px;
+  /* padding inside card */
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(44, 122, 123, 0.25), rgba(246, 173, 85, 0.15));
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* content starts at top */
-    align-items: flex-start;     /* left-align content */
-    text-align: left;            /* left-align text */
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* content starts at top */
+  align-items: flex-start;
+  /* left-align content */
+  text-align: left;
+  /* left-align text */
+  overflow: hidden;
 
-    height: auto;                /* dynamic height based on content */
-    min-height: 100px;           /* optional: prevents very tiny cards */
+  height: auto;
+  /* dynamic height based on content */
+  min-height: 100px;
+  /* optional: prevents very tiny cards */
 }
 
 /* Headings */
 .research-grid .card h2 {
-    width: 100%;
-    margin-bottom: 8px;
-    font-size: 20px;
-    color: #ffffff;
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #ffffff;
 }
 
 /* Paragraphs and Lists */
 .research-grid .card p,
 .research-grid .card ul,
 .research-grid .card ol {
-    width: 100%;
-    margin: 0 0 12px 0;
-    color: #d4e7e7;
-    line-height: 1.5;
+  width: 100%;
+  margin: 0 0 12px 0;
+  color: #d4e7e7;
+  line-height: 1.5;
 }
 
 .research-grid .card ul li,
 .research-grid .card ol li {
-    margin-bottom: 6px;
+  margin-bottom: 6px;
 }
 
 /* Research Page Footer */
 .research-footer {
-    background: #0b1220;
-    color: #ffffff;
-    padding: 40px 20px 20px 20px;
-    font-size: 14px;
-    line-height: 1.6;
+  background: #0b1220;
+  color: #ffffff;
+  padding: 40px 20px 20px 20px;
+  font-size: 14px;
+  line-height: 1.6;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .research-footer a {
-    color: #f6ad55;
-    text-decoration: none;
-    margin: 0 10px;
+  color: #f6ad55;
+  text-decoration: none;
+  margin: 0 10px;
 }
 
 .research-footer a:hover {
-    color: #2c7a7b;
+  color: #2c7a7b;
 }
 
 .research-footer .footer-bottom {
-    margin-top: 18px;
-    font-size: 13px;
-    color: #90a0b0;
+  margin-top: 18px;
+  font-size: 13px;
+  color: #90a0b0;
 }
 
 
@@ -314,67 +330,86 @@ p {
    ========================== */
 
 .farmer-stories-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    padding: 0 10px;
-    margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 0 10px;
+  margin-top: 30px;
 }
 
 /* Individual Story Card */
 .farmer-story {
-    background: linear-gradient(145deg, rgba(44, 122, 123, 0.25), rgba(246, 173, 85, 0.15));
-    backdrop-filter: blur(8px);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.3s;
+  background: linear-gradient(145deg, rgba(44, 122, 123, 0.25), rgba(246, 173, 85, 0.15));
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s;
 }
 
 .farmer-story:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 .farmer-story h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #f6ad55; /* accent color */
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #f6ad55;
+  /* accent color */
 }
 
 .farmer-story p {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 15px;
-    color: #e0f2f1;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  color: #e0f2f1;
 }
 
 .farmer-story img {
-    width: 100%;
-    max-width: 300px;
-    border-radius: 12px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
 }
 
 
 /* Responsive adjustments */
 @media (max-width: 900px) {
-    .farmer-stories-section {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .farmer-stories-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 600px) {
-    .farmer-stories-section {
-        grid-template-columns: 1fr;
-    }
+  .farmer-stories-section {
+    grid-template-columns: 1fr;
+  }
 
-    .farmer-story img {
-        max-width: 100%;
-    }
+  .farmer-story img {
+    max-width: 100%;
+  }
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 880px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav {
+    margin-bottom: 32px;
+  }
 }
