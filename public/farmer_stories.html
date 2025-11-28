@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Farmer Stories - KrishiRokkha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Stories - HarvestGuard</title>
+    <link rel="stylesheet" href="./css/header_footer.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <script type="module" src="./js/shared_nav.js"></script>
 </head>
 
 <body>
 
-<div class="container">
-    <!-- Header -->
-    <header class="nav">
-            <div class="nav-logo">HarvestGuard</div>
+    <div class="page">
+        <!-- Header -->
+        <header class="nav">
+            <a href="/public/welcome.html" class="nav-logo"
+                style="text-decoration: none; color: inherit; cursor: pointer;">HarvestGuard</a>
             <nav class="nav-links">
                 <a href="/public/about.html" data-i18n="nav-features">About Us</a>
                 <a href="/public/farmer_stories.html" data-i18n="nav-impact">Testimonies</a>
-                <a href="/public/our_research.html" data-i18n="nav-about">Reasearch</a>
+                <a href="/public/our_research.html" data-i18n="nav-about">Research</a>
             </nav>
             <div class="nav-buttons">
                 <button id="lang-toggle" class="nav-cta">
@@ -25,46 +30,98 @@
             </div>
         </header>
 
-    <section class="farmer-stories-section">
-        <div class="farmer-story">
-            <h3>Rafique, Barishal</h3>
-            <p>
-                “গত বছর হঠাৎ বৃষ্টিতে আমার ৪০% ধান নষ্ট হয়ে যায়।  
-                এ বছর KrishiRokkha আগেই সতর্ক করেছে—আমি ধান ঢেকে রেখেছিলাম।  
-                ৯০% ফসল বেঁচে গেছে।”  
-            </p>
-            <img src=".\images\farmer 1.jpeg" alt="Farmer Story Photo">
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="stories-hero">
+                <h1 data-i18n="stories_hero">Real Stories from Real Farmers</h1>
+                <p data-i18n="stories_intro">Hear directly from the farmers who are using HarvestGuard to protect their
+                    harvests and improve their livelihoods.</p>
+            </div>
+
+            <section class="farmer-stories-section">
+                <div class="farmer-story">
+                    <h3 data-i18n="farmer_1_name">Rafique, Barishal</h3>
+                    <p data-i18n="farmer_1_story">
+                        Last year, sudden rains destroyed 40% of my rice. This year, HarvestGuard warned me in advance—I
+                        covered my grains. 90% of my harvest was saved.
+                    </p>
+                    <img src="./images/farmer 1.jpeg" alt="Farmer Rafique from Barishal">
+                </div>
+
+                <div class="farmer-story">
+                    <h3 data-i18n="farmer_2_name">Shamima, Rajshahi</h3>
+                    <p data-i18n="farmer_2_story">
+                        When the temperature rises, rice changes color. Following the app's advice, I stored my crops
+                        higher. Losses have reduced significantly, and grain spillage has decreased.
+                    </p>
+                    <img src="./images/farmer 2.jpeg" alt="Farmer Shamima from Rajshahi">
+                </div>
+
+                <div class="farmer-story">
+                    <h3 data-i18n="farmer_3_name">Jalal, Mymensingh</h3>
+                    <p data-i18n="farmer_3_story">
+                        I used to not know which day was best to dry rice. Now I check the app and decide. Problems are
+                        reducing. My confidence in crop care has also increased.
+                    </p>
+                    <img src="./images/farmer 3.jpeg" alt="Farmer Jalal from Mymensingh">
+                </div>
+
+                <div class="farmer-story">
+                    <h3 data-i18n="farmer_4_name">Ayesha, Khulna</h3>
+                    <p data-i18n="farmer_4_story">
+                        The AI scanner helped me identify rotten crops before they spread. I separated them immediately
+                        and saved the rest of my harvest. This technology is a game-changer!
+                    </p>
+                    <img src="./images/farmer 1.jpeg" alt="Farmer Ayesha from Khulna">
+                </div>
+
+                <div class="farmer-story">
+                    <h3 data-i18n="farmer_5_name">Karim, Sylhet</h3>
+                    <p data-i18n="farmer_5_story">
+                        Weather forecasts in Bangla made it so easy to understand. I can now plan my storage better and
+                        avoid last-minute panic. My income has improved by 25% this season.
+                    </p>
+                    <img src="./images/farmer 2.jpeg" alt="Farmer Karim from Sylhet">
+                </div>
+
+                <div class="farmer-story">
+                    <h3 data-i18n="farmer_6_name">Fatima, Rangpur</h3>
+                    <p data-i18n="farmer_6_story">
+                        The offline feature is amazing! Even when I don't have internet, I can still access important
+                        advisories. HarvestGuard truly understands our needs.
+                    </p>
+                    <img src="./images/farmer 3.jpeg" alt="Farmer Fatima from Rangpur">
+                </div>
+            </section>
         </div>
 
-        <div class="farmer-story">
-            <h3>Shamima, Rajshahi</h3>
-            <p>
-                “তাপমাত্রা বেড়ে গেলে ধানের রঙ বদলে যায়।  
-                অ্যাপের পরামর্শ মেনে আমি শস্য উঁচু করে রেখেছি।  
-                ক্ষতি কমেছে অনেক\ এবার ধান ঝরে যাওয়া কমেছে।”  
-            </p>
-            <img src="..\images\farmer 2.jpeg" alt="Farmer Story Photo">
-        </div>
+        <footer class="footer" id="about">
+            <div class="footer-brand">
+                <div class="nav-logo" style="margin-bottom:10px;">HarvestGuard</div>
+                <p data-i18n="footer-desc">Empowering Bangladeshi farmers to reduce post-harvest losses and build a more
+                    resilient, sustainable food system.</p>
+            </div>
+            <div class="footer-columns">
+                <div>
+                    <p class="footer-heading" data-i18n="footer-about-title">About HarvestGuard</p>
+                    <div class="footer-list">
+                        <a href="#" data-i18n="footer-mission">Our Mission</a>
+                        <a href="#" data-i18n="footer-sdg">SDG Impact</a>
+                        <a href="#" data-i18n="footer-team">Team</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="footer-heading" data-i18n="footer-resources-title">Resources</p>
+                    <div class="footer-list">
+                        <a href="#" data-i18n="footer-guide">User Guide</a>
+                        <a href="#" data-i18n="footer-research">Research & Data</a>
+                        <a href="#" data-i18n="footer-stories">Farmer Stories</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
-        <div class="farmer-story">
-            <h3>Jalal, Mymensingh</h3>
-            <p>
-                “আগে বুঝতাম না কোন দিন ধান শুকালে ভালো হবে।  
-                এখন অ্যাপ দেখে ঠিক করি। সমস্যা কমছে। 
-                ফসলের যত্নে আত্মবিশ্বাসও বেড়েছে।”  
-            </p>
-            <img src="..\images\farmer 3.jpeg" alt="Farmer Story Photo">
-        </div>
-    </section>
-
-        <!-- Footer -->
-    <footer class="research-footer">
-
-        <div class="footer-bottom">
-            © 2025 KrishiRokkha — All rights reserved.
-        </div>
-    </footer>
-
-</div>
+    </div>
 </body>
+
 </html>

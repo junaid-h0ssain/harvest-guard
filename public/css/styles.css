@@ -36,12 +36,19 @@ body {
     grid-template-columns: 1fr;
     gap: 16px;
   }
+
+  .container {
+    padding: 15px;
+    margin: 20px auto;
+  }
 }
 
 /* --- CARD STYLE --- */
 .card {
   width: 100%;
-  height: 250px;
+  height: auto;
+  min-height: 250px;
+  max-height: 450px;
   padding: 18px;
   border-radius: 16px;
 
@@ -56,118 +63,45 @@ body {
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  overflow: hidden;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+  word-wrap: break-word;
 }
 
 /* Taller cards for variety */
 .tall {
   padding: 24px;
+  min-height: 300px;
+}
+
+/* Card headings */
+.card h2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 22px;
+}
+
+.card p {
+  width: 100%;
+  text-align: left;
 }
 
 /* List Style */
-.card.list ul {
+.card ul {
   margin-top: 10px;
   padding-left: 20px;
+  width: 100%;
+  text-align: left;
 }
 
-.card.list li {
+.card li {
   margin-bottom: 8px;
   color: #d4e7e7;
-}
-
-
-/* Header */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.brand {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.logo {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(90deg, #2c7a7b, #f6ad55);
-  border-radius: 12px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-weight: 900;
-}
-
-/* Language Buttons */
-.lang-toggle button {
-  padding: 7px 10px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  color: #cbd5e0;
-  cursor: pointer;
-}
-
-.lang-toggle button:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* Footer */
-footer {
-  background: #0b1220;
-  /* dark card-style background */
-  color: #ffffff;
-  padding: 40px 20px 20px 20px;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-footer a {
-  color: #2c7a7b;
-  /* HarvestGuard green accent */
-  text-decoration: none;
-  margin-right: 10px;
-}
-
-footer a:hover {
-  color: #f6ad55;
-  /* accent hover color */
-}
-
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-width: 1100px;
-  margin: 0 auto;
-  gap: 30px;
-}
-
-.footer-section h3 {
-  margin-bottom: 12px;
-  font-size: 16px;
-  color: #f6ad55;
-  /* accent */
-}
-
-.social-links a {
-  display: inline-block;
-  margin-right: 15px;
-  font-weight: 600;
-}
-
-.footer-bottom {
-  text-align: center;
-  margin-top: 18px;
-  font-size: 13px;
-  color: #90a0b0;
+  text-align: left;
 }
 
 
@@ -229,6 +163,17 @@ p {
   line-height: 1.5;
 }
 
+/* Mobile font adjustments */
+@media (max-width: 600px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 15px;
+  }
+}
+
 /* Research page stacked cards */
 .research-grid {
   display: flex;
@@ -271,6 +216,14 @@ p {
   /* optional: prevents very tiny cards */
 }
 
+/* Mobile adjustments for research cards */
+@media (max-width: 600px) {
+  .research-grid .card {
+    width: 95%;
+    padding: 14px;
+  }
+}
+
 /* Headings */
 .research-grid .card h2 {
   width: 100%;
@@ -294,40 +247,46 @@ p {
   margin-bottom: 6px;
 }
 
-/* Research Page Footer */
-.research-footer {
-  background: #0b1220;
-  color: #ffffff;
-  padding: 40px 20px 20px 20px;
-  font-size: 14px;
-  line-height: 1.6;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.research-footer a {
-  color: #f6ad55;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-.research-footer a:hover {
-  color: #2c7a7b;
-}
-
-.research-footer .footer-bottom {
-  margin-top: 18px;
-  font-size: 13px;
-  color: #90a0b0;
-}
-
 
 /* ==========================
    Farmer Stories Page Styles
    ========================== */
+
+/* Hero Section for Stories */
+.stories-hero {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 20px;
+}
+
+.stories-hero h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+  color: #f6ad55;
+  font-weight: 700;
+}
+
+.stories-hero p {
+  font-size: 18px;
+  color: #d4e7e7;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .stories-hero h1 {
+    font-size: 28px;
+  }
+
+  .stories-hero p {
+    font-size: 16px;
+  }
+
+  .stories-hero {
+    margin-bottom: 25px;
+    padding: 15px;
+  }
+}
 
 .farmer-stories-section {
   display: grid;
@@ -383,33 +342,30 @@ p {
 @media (max-width: 900px) {
   .farmer-stories-section {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 }
 
 @media (max-width: 600px) {
   .farmer-stories-section {
     grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 0 5px;
+  }
+
+  .farmer-story {
+    padding: 18px;
+  }
+
+  .farmer-story h3 {
+    font-size: 18px;
+  }
+
+  .farmer-story p {
+    font-size: 15px;
   }
 
   .farmer-story img {
     max-width: 100%;
-  }
-}
-
-
-.nav-links {
-  display: flex;
-  gap: 32px;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
-@media (max-width: 880px) {
-  .nav-links {
-    display: none;
-  }
-
-  .nav {
-    margin-bottom: 32px;
   }
 }
