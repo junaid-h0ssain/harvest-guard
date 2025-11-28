@@ -84,7 +84,7 @@ export function initQuickRegister() {
 
             showQuickRegisterSuccess("Login successful!");
             setTimeout(() => {
-                window.location.href = "./app.html";
+                window.location.href = "/app.html";
             }, 1000);
 
         } catch (error) {
@@ -172,7 +172,7 @@ export function initQuickRegister() {
 
                 showQuickRegisterSuccess("Login successful!");
                 setTimeout(() => {
-                    window.location.href = "./app.html";
+                    window.location.href = "/app.html";
                 }, 1000);
 
             } catch (error) {
@@ -229,7 +229,7 @@ export function initQuickRegister() {
 
             showQuickRegisterSuccess("Account created successfully!");
             setTimeout(() => {
-                window.location.href = "./app.html";
+                window.location.href = "/app.html";
             }, 1500);
 
         } catch (err) {

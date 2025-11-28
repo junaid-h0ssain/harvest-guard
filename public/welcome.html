@@ -5,11 +5,22 @@
     <meta charset="UTF-8" />
     <title>HarvestGuard – Reducing Food Loss in Bangladesh</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="HarvestGuard helps Bangladeshi farmers reduce post-harvest losses through AI-powered monitoring and real-time weather advisories. Protecting every grain, securing every future.">
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg: #020510;
             --bg-alt: #050814;
             --accent: #f5b35c;
+            --accent-glow: rgba(245, 179, 92, 0.3);
+            --success: #4cc896;
+            --warning: #ff6b6b;
             --muted: #7c8598;
             --text: #f5f7ff;
             --card-radius: 18px;
@@ -22,13 +33,14 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             background: radial-gradient(circle at top, #10152a 0, #020510 55%, #000 100%);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         a {
@@ -36,6 +48,141 @@
             text-decoration: none;
         }
 
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes grainFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes drawPath {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px var(--accent-glow);
+            }
+
+            50% {
+                box-shadow: 0 0 40px var(--accent-glow);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ========== PARTICLE SYSTEM ========== */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.4;
+        }
+
+        .grain-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: grainFall linear infinite;
+            z-index: 1;
+        }
+
+        /* ========== LAYOUT ========== */
         .page {
             max-width: 100%;
             margin: 0 auto;
@@ -44,20 +191,28 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            position: relative;
+            z-index: 2;
         }
 
+        /* ========== NAVIGATION ========== */
         .nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 56px;
+            animation: fadeInUp 0.6s ease-out;
         }
 
         .nav-logo {
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 0.25em;
             text-transform: uppercase;
             font-size: 14px;
+            background: linear-gradient(135deg, var(--accent) 0%, #ffd89b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
@@ -65,6 +220,27 @@
             gap: 32px;
             font-size: 14px;
             text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .nav-links a {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-buttons {
@@ -83,14 +259,19 @@
             cursor: pointer;
             font-family: inherit;
             font-weight: 600;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(245, 179, 92, 0.3);
+            box-shadow: 0 8px 20px var(--accent-glow);
         }
 
+        .nav-cta:active {
+            transform: translateY(0);
+        }
+
+        /* ========== HERO SECTION ========== */
         .hero {
             min-height: 100vh;
             display: grid;
@@ -98,6 +279,11 @@
             gap: 56px;
             align-items: center;
             margin-bottom: 0;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
         .hero-tagline {
@@ -106,18 +292,26 @@
             letter-spacing: 0.3em;
             color: var(--accent);
             margin-bottom: 18px;
+            font-weight: 600;
         }
 
         .hero-title {
             font-size: clamp(40px, 4vw, 56px);
             line-height: 1.05;
             margin-bottom: 18px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #aec4e8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-subtitle {
             color: var(--muted);
             max-width: 520px;
             margin-bottom: 28px;
+            font-size: 16px;
+            line-height: 1.7;
         }
 
         .hero-cta {
@@ -126,10 +320,20 @@
             gap: 10px;
             padding: 14px 26px;
             border-radius: 999px;
-            border: 1px solid var(--accent);
+            border: 2px solid var(--accent);
             text-transform: uppercase;
             font-size: 13px;
             letter-spacing: 0.18em;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: transparent;
+        }
+
+        .hero-cta:hover {
+            background: var(--accent);
+            color: var(--bg);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--accent-glow);
         }
 
         .hero-meta {
@@ -138,16 +342,185 @@
             gap: 24px;
             font-size: 13px;
             color: var(--muted);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
-        .hero-meta-item span {
+        /* ========== 3D CANVAS CONTAINER ========== */
+        #hero-3d-canvas {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 400px;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* ========== STATISTICS SECTION ========== */
+        .stats-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            padding: 40px 30px;
+            background: linear-gradient(135deg, rgba(27, 36, 60, 0.6) 0%, rgba(11, 16, 32, 0.6) 100%);
+            border-radius: var(--card-radius);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .stat-card.visible {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent) 0%, #ffd89b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
             display: block;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.24em;
-            margin-bottom: 4px;
         }
 
+        .stat-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        /* ========== WORKFLOW VISUALIZATION ========== */
+        .workflow-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .workflow-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #fff 0%, #aec4e8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .workflow-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .workflow-step {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, rgba(27, 36, 60, 0.4) 0%, rgba(11, 16, 32, 0.4) 100%);
+            border-radius: var(--card-radius);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s;
+        }
+
+        .workflow-step.visible {
+            animation: fadeIn 0.6s ease-out forwards, pulse 2s ease-in-out infinite;
+        }
+
+        .workflow-step:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .workflow-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--accent) 0%, #ffd89b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .workflow-step:nth-child(2) .workflow-icon {
+            animation-delay: 0.5s;
+        }
+
+        .workflow-step:nth-child(3) .workflow-icon {
+            animation-delay: 1s;
+        }
+
+        .workflow-step:nth-child(4) .workflow-icon {
+            animation-delay: 1.5s;
+        }
+
+        .workflow-label {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .workflow-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* Connecting arrows */
+        .workflow-arrow {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            transform: translateY(-50%);
+            opacity: 0;
+        }
+
+        .workflow-arrow::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: -10px;
+            color: var(--accent);
+            font-size: 20px;
+        }
+
+        .workflow-step.visible .workflow-arrow {
+            animation: fadeIn 0.6s ease-out 0.3s forwards;
+        }
+
+        /* ========== SECTIONS ========== */
         .section {
             position: relative;
             min-height: 100vh;
@@ -155,6 +528,12 @@
             border-top: 1px solid rgba(255, 255, 255, 0.03);
             display: flex;
             align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .section.visible {
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
         .section-index {
@@ -162,8 +541,8 @@
             top: 0;
             left: -12px;
             font-size: 64px;
-            font-weight: 700;
-            color: #aec4e8;
+            font-weight: 800;
+            color: rgba(174, 196, 232, 0.1);
             line-height: 1;
             transform: translateY(-16px);
             pointer-events: none;
@@ -184,16 +563,21 @@
             letter-spacing: 0.28em;
             color: var(--accent);
             margin-bottom: 10px;
+            font-weight: 600;
         }
 
         .section-title {
-            font-size: 26px;
+            font-size: 32px;
             margin-bottom: 12px;
+            font-weight: 800;
+            line-height: 1.2;
         }
 
         .section-body {
             color: var(--muted);
             margin-bottom: 18px;
+            font-size: 15px;
+            line-height: 1.7;
         }
 
         .section-link {
@@ -201,14 +585,30 @@
             text-transform: uppercase;
             letter-spacing: 0.2em;
             color: var(--accent);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .section-link:hover {
+            gap: 12px;
         }
 
         .image-placeholder {
             border-radius: var(--card-radius);
             background: linear-gradient(135deg, #1b243c 0, #0b1020 100%);
-            min-height: 260px;
+            min-height: 360px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             overflow: hidden;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .image-placeholder:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .image-placeholder img {
@@ -216,8 +616,32 @@
             height: 100%;
             object-fit: cover;
             border-radius: var(--card-radius);
+            transition: transform 0.3s;
         }
 
+        .image-placeholder:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Loading skeleton */
+        .image-placeholder.loading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            to {
+                left: 100%;
+            }
+        }
+
+        /* ========== FOOTER ========== */
         .footer {
             display: flex;
             justify-content: space-between;
@@ -246,6 +670,7 @@
             letter-spacing: 0.24em;
             margin-bottom: 10px;
             color: #d1d5f0;
+            font-weight: 600;
         }
 
         .footer-list {
@@ -254,6 +679,15 @@
             gap: 6px;
         }
 
+        .footer-list a {
+            transition: color 0.3s;
+        }
+
+        .footer-list a:hover {
+            color: var(--accent);
+        }
+
+        /* ========== RESPONSIVE ========== */
         @media (max-width: 880px) {
             .nav-links {
                 display: none;
@@ -273,6 +707,19 @@
                 max-width: 400px;
                 margin: 0 auto;
                 width: 100%;
+            }
+
+            #hero-3d-canvas {
+                display: none;
+            }
+
+            .workflow-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .workflow-arrow {
+                display: none;
             }
 
             .section-grid {
@@ -310,18 +757,29 @@
             .nav {
                 margin-bottom: 32px;
             }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .workflow-title {
+                font-size: 28px;
+            }
         }
 
-
+        /* ========== UTILITY CLASSES ========== */
         .small {
             font-size: 13px;
             color: var(--muted);
         }
 
         .card {
-            background: var(--card);
+            background: linear-gradient(135deg, rgba(27, 36, 60, 0.6) 0%, rgba(11, 16, 32, 0.6) 100%);
             padding: 14px;
             border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
         }
 
         .badge {
@@ -331,7 +789,7 @@
             font-weight: 700;
         }
 
-        /* Quick Register Form Styles */
+        /* ========== QUICK REGISTER FORM ========== */
         #registerForm {
             display: flex;
             flex-direction: column;
@@ -351,14 +809,14 @@
         #registerForm input,
         #registerForm select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 14px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(255, 255, 255, 0.05);
             color: var(--text);
             font-size: 13px;
             font-family: inherit;
-            transition: all 0.2s;
+            transition: all 0.3s;
         }
 
         #registerForm input::placeholder {
@@ -370,11 +828,11 @@
             outline: none;
             border-color: var(--accent);
             background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 12px rgba(245, 179, 92, 0.15);
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         #registerForm .btn {
-            padding: 10px 16px;
+            padding: 12px 18px;
             border-radius: 8px;
             border: none;
             background: var(--accent);
@@ -384,13 +842,13 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             font-family: inherit;
         }
 
         #registerForm .btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(245, 179, 92, 0.3);
+            box-shadow: 0 8px 20px var(--accent-glow);
         }
 
         #registerForm .btn:disabled {
@@ -414,6 +872,7 @@
             font-size: 12px;
             margin-bottom: 10px;
             display: none;
+            animation: fadeInUp 0.3s ease-out;
         }
 
         #quickRegisterError {
@@ -427,17 +886,38 @@
             color: #4cc896;
             border: 1px solid rgba(76, 200, 150, 0.3);
         }
+
+        /* ========== LOADING STATES ========== */
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Particle Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
     <div class="page">
         <header class="nav">
             <div class="nav-logo">HarvestGuard</div>
             <nav class="nav-links">
                 <a href="/about.html" data-i18n="nav-features">About Us</a>
                 <a href="/farmer_stories.html" data-i18n="nav-impact">Testimonies</a>
-                <a href="/our_research.html" data-i18n="nav-about">Reasearch</a>
+                <a href="/our_research.html" data-i18n="nav-about">Research</a>
             </nav>
             <div class="nav-buttons">
                 <button id="lang-toggle" class="nav-cta">
@@ -448,17 +928,21 @@
         </header>
 
         <section class="hero">
-            <div>
+            <div class="hero-content">
                 <p class="hero-tagline" data-i18n="hero-tagline">Reducing Food Loss in Bangladesh</p>
                 <h1 class="hero-title" data-i18n="hero-title">Protecting Every Grain, Securing Every Future.</h1>
                 <p class="hero-subtitle" data-i18n="hero-subtitle">Bangladesh loses 4.5 million metric tonnes of food
                     grains annually—costing $1.5 billion. HarvestGuard helps farmers reduce post-harvest losses through
                     smart storage monitoring and real-time weather advisories.</p>
-                <a href="#section-01" class="hero-cta">
+                <a href="#stats-section" class="hero-cta">
                     <span data-i18n="hero-cta">Learn more</span>
                     <span>↓</span>
                 </a>
             </div>
+
+            <!-- 3D Canvas -->
+            <canvas id="hero-3d-canvas"></canvas>
+
             <aside class="hero-meta">
                 <!-- Quick Register -->
                 <div>
@@ -466,7 +950,7 @@
                         <div style="display: flex; gap: 10px; align-items: center; justify-content: space-between;">
                             <div>
                                 <strong id="quickTitle">Quick Register</strong>
-                                <div class="small" id="quickSub">You can register fast.</div>
+                                <div class="small" id="quickSub">Register Now!</div>
                             </div>
                             <div class="badge" id="langBadge">EN</div>
                         </div>
@@ -551,6 +1035,57 @@
             </aside>
         </section>
 
+        <!-- Statistics Section -->
+        <section class="stats-section" id="stats-section">
+            <h2 class="workflow-title" data-i18n="stat-title">Bangladesh Has</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" data-target="4.5">0</span>
+                    <div class="stat-label" data-i18n="stat-1-label">Million Tonnes Lost</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-target="1.5">0</span>
+                    <div class="stat-label" data-i18n="stat-2-label">Billion USD Cost</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-target="32">0</span>
+                    <div class="stat-label" data-i18n="stat-3-label">% Food Loss Rate</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflow Visualization -->
+        <section class="workflow-section">
+            <h2 class="workflow-title" data-i18n="workflow-title">How HarvestGuard Works</h2>
+            <div class="workflow-container">
+                <div class="workflow-step">
+                    <div class="workflow-icon">📊</div>
+                    <div class="workflow-label" data-i18n="workflow-1-label">Data Collection</div>
+                    <div class="workflow-desc" data-i18n="workflow-1-desc">AI scans storage conditions & weather
+                        patterns</div>
+                    <div class="workflow-arrow"></div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">⚠️</div>
+                    <div class="workflow-label" data-i18n="workflow-2-label">Smart Warning</div>
+                    <div class="workflow-desc" data-i18n="workflow-2-desc">Real-time alerts for risks detected</div>
+                    <div class="workflow-arrow"></div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">🎯</div>
+                    <div class="workflow-label" data-i18n="workflow-3-label">Farmer Action</div>
+                    <div class="workflow-desc" data-i18n="workflow-3-desc">Simple Bangla instructions to protect crops
+                    </div>
+                    <div class="workflow-arrow"></div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">✅</div>
+                    <div class="workflow-label" data-i18n="workflow-4-label">Food Saved</div>
+                    <div class="workflow-desc" data-i18n="workflow-4-desc">Reduced losses, increased income</div>
+                </div>
+            </div>
+        </section>
+
         <section class="section" id="section-01">
             <div class="section-index">01</div>
             <div class="section-grid">
@@ -562,23 +1097,25 @@
                         particularly affect vulnerable communities and hinder progress toward SDG 12: Responsible
                         Consumption and Production.</p>
                     <a href="https://bangladesh.un.org/en/sdgs/12" class="section-link" data-i18n="s1-link">Read the
-                        full report</a>
+                        full report →</a>
                 </div>
-                <div class="image-placeholder"><img src="/section1.jpg" alt="Farmer inspecting grain storage" /></div>
+                <div class="image-placeholder loading"><img src="/section1.jpg" alt="Farmer inspecting grain storage"
+                        loading="lazy" /></div>
             </div>
         </section>
 
         <section class="section" id="section-02">
             <div class="section-index">02</div>
             <div class="section-grid">
-                <div class="image-placeholder"><img src="/section2.jpg" alt="Smart monitoring technology" /></div>
+                <div class="image-placeholder loading"><img src="/section2.jpg" alt="Smart monitoring technology"
+                        loading="lazy" /></div>
                 <div>
                     <p class="section-heading" data-i18n="s2-heading">Smart Technology</p>
                     <h2 class="section-title" data-i18n="s2-title">AI-Powered Storage Monitoring</h2>
                     <p class="section-body" data-i18n="s2-body">HarvestGuard uses computer vision to detect early signs
                         of spoilage, moisture damage, and pest infestation. Farmers receive instant alerts and
                         actionable recommendations to protect their harvest.</p>
-                    <a href="#" class="section-link" data-i18n="s2-link">See how it works</a>
+                    <a href="#" class="section-link" data-i18n="s2-link">See how it works →</a>
                 </div>
             </div>
         </section>
@@ -592,40 +1129,46 @@
                     <p class="section-body" data-i18n="s3-body">Get 5-day weather forecasts tailored to your upazila,
                         with simple Bangla advisories like "বৃষ্টির সম্ভাবনা খুব বেশি—আজই ধান কাটুন অথবা ঢেকে রাখুন" so
                         farmers can make informed decisions quickly.</p>
-                    <a href="#" class="section-link" data-i18n="s3-link">View weather feature</a>
+                    <a href="#" class="section-link" data-i18n="s3-link">View weather feature →</a>
                 </div>
-                <div class="image-placeholder"><img src="/section3.jpg" alt="Weather forecast interface" /></div>
+                <div class="image-placeholder loading"><img src="/section3.jpg" alt="Weather forecast interface"
+                        loading="lazy" /></div>
             </div>
         </section>
 
         <footer class="footer" id="about">
-            <div class="footer-brand">
-                <div class="nav-logo" style="margin-bottom:10px;">HarvestGuard</div>
-                <p data-i18n="footer-desc">Empowering Bangladeshi farmers to reduce post-harvest losses and build a more
-                    resilient, sustainable food system.</p>
-            </div>
-            <div class="footer-columns">
-                <div>
-                    <p class="footer-heading" data-i18n="footer-about-title">About HarvestGuard</p>
-                    <div class="footer-list">
-                        <a href="#" data-i18n="footer-mission">Our Mission</a>
-                        <a href="#" data-i18n="footer-sdg">SDG Impact</a>
-                        <a href="#" data-i18n="footer-team">Team</a>
+                <footer class="footer" id="about">
+                    <div class="footer-brand">
+                        <div class="nav-logo" style="margin-bottom:10px;">HarvestGuard</div>
+                        <p data-i18n="footer-desc">Empowering Bangladeshi farmers to reduce post-harvest losses and
+                            build a more
+                            resilient, sustainable food system.</p>
                     </div>
-                </div>
-                <div>
-                    <p class="footer-heading" data-i18n="footer-resources-title">Resources</p>
-                    <div class="footer-list">
-                        <a href="#" data-i18n="footer-guide">User Guide</a>
-                        <a href="#" data-i18n="footer-research">Research & Data</a>
-                        <a href="#" data-i18n="footer-stories">Farmer Stories</a>
+                    <div class="footer-columns">
+                        <div>
+                            <p class="footer-heading" data-i18n="footer-about-title">About HarvestGuard</p>
+                            <div class="footer-list">
+                                <a href="#" data-i18n="footer-mission">Our Mission</a>
+                                <a href="#" data-i18n="footer-sdg">SDG Impact</a>
+                                <a href="#" data-i18n="footer-team">Team</a>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="footer-heading" data-i18n="footer-resources-title">Resources</p>
+                            <div class="footer-list">
+                                <a href="#" data-i18n="footer-guide">User Guide</a>
+                                <a href="#" data-i18n="footer-research">Research & Data</a>
+                                <a href="#" data-i18n="footer-stories">Farmer Stories</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </footer>
             </div>
-        </footer>
-    </div>
 
-    <script type="module" src="../src/welcome.js"></script>
+            <!-- Three.js for 3D visualization -->
+
+            <script type="module" src="../src/welcome.js"></script>
+            <script type="module" src="../src/welcome-animations.js"></script>
 </body>
 
 </html>

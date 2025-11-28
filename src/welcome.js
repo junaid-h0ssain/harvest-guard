@@ -6,12 +6,25 @@ const translations = {
     en: {
         "nav-features": "About Us",
         "nav-impact": "Testimonies",
-        "nav-about": "Reasearch",
+        "nav-about": "Research",
         "nav-enter": "Enter App",
         "hero-tagline": "Reducing Food Loss in Bangladesh",
         "hero-title": "Protecting Every Grain, Securing Every Future.",
         "hero-subtitle": "Bangladesh loses 4.5 million metric tonnes of food grains annually—costing $1.5 billion. HarvestGuard helps farmers reduce post-harvest losses through smart storage monitoring and real-time weather advisories.",
         "hero-cta": "Learn more",
+        "stat-title": "Bangladesh has",
+        "stat-1-label": "Million Tonnes Lost",
+        "stat-2-label": "Billion USD Cost",
+        "stat-3-label": "% Food Loss Rate",
+        "workflow-title": "How HarvestGuard Works",
+        "workflow-1-label": "Data Collection",
+        "workflow-1-desc": "AI scans storage conditions & weather patterns",
+        "workflow-2-label": "Smart Warning",
+        "workflow-2-desc": "Real-time alerts for risks detected",
+        "workflow-3-label": "Farmer Action",
+        "workflow-3-desc": "Simple Bangla instructions to protect crops",
+        "workflow-4-label": "Food Saved",
+        "workflow-4-desc": "Reduced losses, increased income",
         "meta-problem-title": "The Problem",
         "meta-problem-text": "12–32% of staple foods including rice, pulses, vegetables, meat, and dairy are lost annually during production and distribution.",
         "meta-sdg-title": "SDG 12.3",
@@ -41,14 +54,27 @@ const translations = {
         "footer-stories": "Farmer Stories"
     },
     bn: {
-        "nav-features": "বৈশিষ্ট্য",
-        "nav-impact": "প্রভাব",
-        "nav-about": "সম্পর্কে",
+        "nav-features": "আমাদের সম্পর্কে",
+        "nav-impact": "সাক্ষ্য",
+        "nav-about": "গবেষণা",
         "nav-enter": "অ্যাপে প্রবেশ করুন",
         "hero-tagline": "বাংলাদেশে খাদ্য ক্ষতি হ্রাস",
         "hero-title": "প্রতিটি শস্য রক্ষা, প্রতিটি ভবিষ্যৎ সুরক্ষিত।",
         "hero-subtitle": "বাংলাদেশ বছরে ৪.৫ মিলিয়ন মেট্রিক টন খাদ্যশস্য হারায়—যার মূল্য $১.৫ বিলিয়ন। হারভেস্টগার্ড কৃষকদের স্মার্ট স্টোরেজ মনিটরিং এবং রিয়েল-টাইম আবহাওয়া পরামর্শের মাধ্যমে ফসল-পরবর্তী ক্ষতি কমাতে সাহায্য করে।",
         "hero-cta": "আরও জানুন",
+        "stat-title": "বাংলাদেশে",
+        "stat-1-label": "মিলিয়ন টন ক্ষতি",
+        "stat-2-label": "বিলিয়ন ডলার খরচ",
+        "stat-3-label": "% খাদ্য ক্ষতির হার",
+        "workflow-title": "হারভেস্টগার্ড কীভাবে কাজ করে",
+        "workflow-1-label": "ডেটা সংগ্রহ",
+        "workflow-1-desc": "এআই স্টোরেজ অবস্থা এবং আবহাওয়ার ধরণ স্ক্যান করে",
+        "workflow-2-label": "স্মার্ট সতর্কতা",
+        "workflow-2-desc": "ঝুঁকি সনাক্ত হলে রিয়েল-টাইম সতর্কতা",
+        "workflow-3-label": "কৃষকের পদক্ষেপ",
+        "workflow-3-desc": "ফসল রক্ষার জন্য সহজ বাংলা নির্দেশনা",
+        "workflow-4-label": "খাদ্য সংরক্ষিত",
+        "workflow-4-desc": "ক্ষতি হ্রাস, আয় বৃদ্ধি",
         "meta-problem-title": "সমস্যা",
         "meta-problem-text": "চাল, ডাল, সবজি, মাংস এবং দুগ্ধজাত সহ প্রধান খাদ্যের ১২–৩২% উৎপাদন এবং বিতরণের সময় বছরে হারিয়ে যায়।",
         "meta-sdg-title": "এসডিজি ১২.৩",
@@ -81,38 +107,6 @@ const translations = {
 
 // Current language state
 let currentLang = 'en';
-
-// Fetch and inject welcome.html content
-async function loadWelcomePage() {
-    try {
-        const response = await fetch('/welcome.html');
-        const html = await response.text();
-        
-        // Parse HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        // Extract styles and insert into document head
-        const styles = doc.querySelectorAll('style');
-        styles.forEach(style => document.head.appendChild(style.cloneNode(true)));
-        
-        // Insert body content
-        document.body.innerHTML = doc.body.innerHTML;
-        
-        // Check for login and redirect
-        const isLoggedIn = localStorage.getItem('harvestguard_user');
-        if (isLoggedIn) {
-            window.location.href = './app.html';
-            return;
-        }
-        
-        // Initialize event listeners after DOM is loaded
-        initializeEventListeners();
-        
-    } catch (error) {
-        console.error('Failed to load welcome page:', error);
-    }
-}
 
 function setLanguage(lang) {
     currentLang = lang;
@@ -151,7 +145,7 @@ function initializeEventListeners() {
         if (enterAppBtn) {
             enterAppBtn.addEventListener('click', () => {
                 console.log('Enter app button clicked');
-                window.location.href = './app.html';
+                window.location.href = '/app.html';
             });
             console.log('✓ Enter app button initialized');
         }
@@ -165,9 +159,9 @@ function initializeEventListeners() {
     }
 }
 
-// Load welcome page when DOM is ready
+// Initialize when DOM is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadWelcomePage);
+    document.addEventListener('DOMContentLoaded', initializeEventListeners);
 } else {
-    loadWelcomePage();
+    initializeEventListeners();
 }
