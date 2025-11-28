@@ -75,6 +75,18 @@ export function initAiScanner() {
 
             const status = interpretLabel(label);
             resultEl.textContent = status.messageBn;
+
+            // Style the output
+            resultEl.style.fontSize = "1.5rem";
+            resultEl.style.fontWeight = "bold";
+            resultEl.style.marginTop = "10px";
+
+            if (status.healthStatus === "rotten") {
+                resultEl.style.color = "#d32f2f"; // Red
+            } else {
+                resultEl.style.color = "#2e7d32"; // Green
+            }
+
             statusEl.textContent = "";
         } catch (err) {
             statusEl.textContent = "স্ক্যান করা যায়নি। পরে চেষ্টা করুন।";
